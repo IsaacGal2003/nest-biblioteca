@@ -18,7 +18,6 @@ export class Libro {
   @Column()
   anioPublicacion: number;
 
-  //
   @ManyToOne(() => Autor, (autor) => autor.libros)
   @JoinColumn({ name: 'autorId' })
   autor: Autor;
