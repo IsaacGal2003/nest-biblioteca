@@ -3,13 +3,15 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
+  Put,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { AutorService } from './autor.service';
 import { CreateAutorDto } from './dto/create-autor.dto';
 import { UpdateAutorDto } from './dto/update-autor.dto';
+import { Autor } from './entities/autor.entity';
 
 @Controller('autor')
 export class AutorController {
@@ -21,22 +23,25 @@ export class AutorController {
   }
 
   @Get()
-  findAll() {
+  findAll(): Promise<Autor[]> {
     return this.autorService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.autorService.findOne(+id);
+  findOne(id: number): Promise<Autor> {
+    return this.autorService.findOne(id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAutorDto: UpdateAutorDto) {
-    return this.autorService.update(+id, updateAutorDto);
+  @Put(':id')
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() body: UpdateAutorDto,
+  ): Promise<Autor> {
+    return this.autorService.update(id, body);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.autorService.remove(+id);
+  delete(@Param('id', ParseIntPipe) id: number): Promise<void> {
+    return this.autorService.remove(id);
   }
 }

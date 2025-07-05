@@ -1,5 +1,6 @@
 import {
   Column,
+  Entity,
   JoinColumn,
   ManyToOne,
   OneToMany,
@@ -8,6 +9,7 @@ import {
 import { Autor } from '../../autor/entities/autor.entity';
 import { Prestamo } from 'src/prestamo/entities/prestamo.entity';
 
+@Entity()
 export class Libro {
   @PrimaryGeneratedColumn()
   id: number;

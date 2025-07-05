@@ -1,6 +1,7 @@
 import { Prestamo } from 'src/prestamo/entities/prestamo.entity';
-import { Column, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
+@Entity()
 export class Usuario {
   @PrimaryGeneratedColumn()
   id: number;

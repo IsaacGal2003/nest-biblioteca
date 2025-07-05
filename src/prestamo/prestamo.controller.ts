@@ -2,44 +2,46 @@ import {
   Controller,
   Get,
   Post,
-  Body,
-  Patch,
-  Param,
+  Put,
   Delete,
+  Param,
+  Body,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { PrestamoService } from './prestamo.service';
 import { CreatePrestamoDto } from './dto/create-prestamo.dto';
 import { UpdatePrestamoDto } from './dto/update-prestamo.dto';
+import { Prestamo } from './entities/prestamo.entity';
 
-@Controller('prestamo')
+@Controller('prestamos')
 export class PrestamoController {
   constructor(private readonly prestamoService: PrestamoService) {}
 
   @Post()
-  create(@Body() createPrestamoDto: CreatePrestamoDto) {
-    return this.prestamoService.create(createPrestamoDto);
+  create(@Body() dto: CreatePrestamoDto): Promise<Prestamo> {
+    return this.prestamoService.create(dto);
   }
 
   @Get()
-  findAll() {
+  findAll(): Promise<Prestamo[]> {
     return this.prestamoService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.prestamoService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: number): Promise<Prestamo> {
+    return this.prestamoService.findOne(id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(
-    @Param('id') id: string,
-    @Body() updatePrestamoDto: UpdatePrestamoDto,
-  ) {
-    return this.prestamoService.update(+id, updatePrestamoDto);
+    @Param('id', ParseIntPipe) id: number,
+    @Body() dto: UpdatePrestamoDto,
+  ): Promise<Prestamo> {
+    return this.prestamoService.update(id, dto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.prestamoService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
+    return this.prestamoService.remove(id);
   }
 }

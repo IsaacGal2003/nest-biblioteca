@@ -1,7 +1,14 @@
 import { Libro } from 'src/libro/entities/libro.entity';
 import { Usuario } from 'src/usuario/entities/usuario.entity';
-import { Column, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
+@Entity()
 export class Prestamo {
   @PrimaryGeneratedColumn()
   id: number;
